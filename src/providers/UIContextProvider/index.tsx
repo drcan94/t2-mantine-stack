@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { type ColorScheme } from "@mantine/core";
 import Cookies from "universal-cookie";
 import { type NextPage } from "next";
+import { useLocalStorage } from "@mantine/hooks";
 export type UIContextType = {
   rtl: boolean;
   setRtl: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,10 +24,15 @@ const UIContextProvider: NextPage<ProviderProps> = ({
   initialRtl,
   initialColorScheme,
 }) => {
-  const [rtl, setRtl] = useState<boolean>(initialRtl || false);
-  const [colorScheme, setColorScheme] = useState<ColorScheme>(
-    initialColorScheme || "light"
-  );
+  const [rtl, setRtl] = useLocalStorage<boolean>({
+    key: "currentRtl",
+    defaultValue: initialRtl,
+  });
+
+  const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
+    key: "color-scheme",
+    defaultValue: initialColorScheme,
+  });
 
   const toggleColorScheme = (value?: ColorScheme): void => {
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
