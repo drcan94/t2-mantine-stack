@@ -48,7 +48,11 @@ MyApp.getInitialProps = async ({
 
   return {
     ...appContext,
+    session,
+    initialColorScheme,
+    initialRtl,
     pageProps: {
+      ...appContext.pageProps,
       session,
       initialColorScheme,
       initialRtl,
