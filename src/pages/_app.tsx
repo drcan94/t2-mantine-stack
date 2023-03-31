@@ -5,10 +5,10 @@ import type { Session } from "next-auth";
 import type { ColorScheme } from "@mantine/core";
 import LayoutProvider from "~/components/Layout";
 import { SessionProvider, getSession } from "next-auth/react";
-import type { AppProps, AppContext, AppType } from "next/app";
+import type { AppContext, AppType } from "next/app";
 import UIContextProvider from "../providers/UIContextProvider/index";
 
-type MyAppProps = AppProps & {
+type MyAppProps = {
   session: Session | null;
   initialRtl: boolean;
   initialColorScheme: ColorScheme;
@@ -32,10 +32,7 @@ const MyApp: AppType<MyAppProps> = ({
   );
 };
 
-MyApp.getInitialProps = async ({
-  ctx,
-  ...props
-}: AppContext): Promise<MyAppProps> => {
+MyApp.getInitialProps = async ({ ctx, ...props }: AppContext) => {
   const req = ctx.req;
   const cookies = new Cookies(req?.headers.cookie);
 
@@ -52,7 +49,6 @@ MyApp.getInitialProps = async ({
     initialColorScheme,
     initialRtl,
     pageProps: {
-      ...appContext.pageProps,
       session,
       initialColorScheme,
       initialRtl,
