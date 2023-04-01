@@ -1,6 +1,11 @@
-# Create T3 App
+# Create T2M App
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+This is a [T2M Stack](https://t2m-stack.vercel.app/) project based on T3 Stack. 
+My project is just a boilerplate for mantine-next-ts-prisma-next-auth-trpc (i called T2M)
+You must learn t3 stack without tailwind css
+
+Keep Reading! (Following Readme is from T3 stack official readme)
+Only modified with Mantine instead of Tailwind
 
 ## What's next? How do I make an app with this?
 
@@ -11,7 +16,7 @@ If you are not familiar with the different technologies used in this project, pl
 - [Next.js](https://nextjs.org)
 - [NextAuth.js](https://next-auth.js.org)
 - [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
+- [Mantine](https://mantine.dev)
 - [tRPC](https://trpc.io)
 
 ## Learn More

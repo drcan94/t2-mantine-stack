@@ -3,7 +3,7 @@ import Cookies from "universal-cookie"; // for parsing and serializing cookies
 import { api } from "~/utils/api";
 import type { Session } from "next-auth";
 import type { ColorScheme } from "@mantine/core";
-import LayoutProvider from "~/components/Layout";
+import LayoutProvider from "~/components/LayoutProvider";
 import { SessionProvider, getSession } from "next-auth/react";
 import type { AppContext, AppType } from "next/app";
 import UIContextProvider from "../providers/UIContextProvider/index";

@@ -4,9 +4,8 @@ import type { MantineTheme, CSSObject } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
 import { useUIContext } from "../../providers/UIContextProvider";
 import { rtlCache } from "./rtl-cache";
-import App from "./App";
 import type { NextPage } from "next";
-
+import MainApp from "../MainApp";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -116,7 +115,7 @@ const LayoutProvider: NextPage<LayoutProps> = ({
           },
         }}
       >
-        <App>{children}</App>
+        <MainApp>{children}</MainApp>
       </MantineProvider>
     </ColorSchemeProvider>
   );
