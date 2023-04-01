@@ -1,8 +1,10 @@
+import { ActionWithPayload, GenericAction } from "~/appStore/helpers/combineReducers";
 import type {
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAIL,
   USER_LOGOUT,
+  UserConstants,
 } from "./constants";
 
 export type UserType = {
@@ -18,17 +20,21 @@ export type UserInfo = {
   token: string;
 };
 
-export type UserLoginType = {
+export interface UserLoginType {
   userInfo: UserInfo;
   loading: boolean;
   error: string | null;
-};
+}
 
+export type ErrorInfo = {
+  message: string;
+};
 export type UserAction =
-  | { type: typeof USER_LOGIN_REQUEST }
-  | {
-      type: typeof USER_LOGIN_SUCCESS;
-      payload: UserInfo;
+  | { type: UserConstants["USER_LOGIN_REQUEST"] }
+  | ActionWithPayload<{ user: UserType; token: string }> & {
+      type: UserConstants["USER_LOGIN_SUCCESS"];
     }
-  | { type: typeof USER_LOGIN_FAIL; payload: string }
-  | { type: typeof USER_LOGOUT };
+  | ActionWithPayload<{ message: string }> & {
+      type: UserConstants["USER_LOGIN_FAIL"];
+    }
+  | { type: UserConstants["USER_LOGOUT"] };

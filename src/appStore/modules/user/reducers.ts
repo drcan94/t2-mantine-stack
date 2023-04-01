@@ -8,7 +8,11 @@ import {
 } from "./constants";
 
 export const userLoginReducer = (
-  initialState: UserLoginType,
+  initialState: UserLoginType = {
+    loading: false,
+    userInfo: initialUserInfo,
+    error: null,
+  },
   action: UserAction
 ): UserLoginType => {
   switch (action.type) {
@@ -21,8 +25,8 @@ export const userLoginReducer = (
       return {
         ...initialState,
         userInfo: {
-          user: action.payload.user,
-          token: action.payload.token,
+          user: action.payload?.user,
+          token: action.payload?.token,
         },
         loading: false,
         error: null,
@@ -33,7 +37,7 @@ export const userLoginReducer = (
         ...initialState,
         userInfo: initialUserInfo,
         loading: false,
-        error: action.payload,
+        error: action.payload?.message,
       };
 
     case USER_LOGOUT:
@@ -45,6 +49,10 @@ export const userLoginReducer = (
       };
 
     default:
-      return initialState;
+      return initialState || { // make sure to return an object that has the 'userInfo', 'loading', and 'error' properties
+        userInfo: initialUserInfo,
+        loading: false,
+        error: null,
+      };
   }
 };

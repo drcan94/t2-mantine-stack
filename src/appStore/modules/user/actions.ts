@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { type AxiosError } from "axios";
 import type React from "react";
 import type { UserAction, UserInfo } from "./types";
 import type { RootState } from "../../helpers/types";
@@ -28,18 +28,27 @@ export const loginUser =
 
       typeof window !== "undefined" &&
         localStorage.setItem("currentUser", JSON.stringify(data));
-    } catch (error: any) {
+    } catch (unknownError: unknown) {
+      const isAxiosError = (
+        error: unknown
+      ): error is AxiosError<{ detail: string }> =>
+        (error as AxiosError).isAxiosError;
+
+      const error = isAxiosError(unknownError)
+        ? unknownError
+        : { message: "An unknown error occurred" };
+
       dispatch({
         type: USER_LOGIN_FAIL,
         payload:
-          error.response && error.response.data.detail
-            ? error.response.data.detail
-            : error.message,
+          isAxiosError(error) && error.response && error.response.data.detail
+            ? { message: error.response.data.detail }
+            : { message: error.message },
       });
     }
   };
 
-export const logout = (dispatch: any) => {
+export const logout = (dispatch: (action: UserAction) => void) => {
   dispatch({ type: USER_LOGOUT });
   typeof window !== "undefined" && localStorage.removeItem("currentUser");
 };
