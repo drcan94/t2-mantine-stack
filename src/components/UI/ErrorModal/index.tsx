@@ -1,5 +1,5 @@
 import React from "react";
-import { ErrorType } from "../../Users/AddUser/index";
+import { type ErrorType } from "../../Users/AddUser/index";
 import { createPortal } from "react-dom";
 import { Backdrop } from "./Backdrop/index";
 import { ModalOverlay } from "./Overlay/index";

@@ -1,9 +1,11 @@
 import React from "react";
 import { Actions, Control, Controls } from "./styles";
-import { IExpense } from "../data";
+import { type IExpense } from "../data";
 import { useExpensesContext } from "../../../providers/ExpenseDataProvider/index";
 
-const NewExpenseForm: React.FC<{ setIsOpen: any}> = ({ setIsOpen }) => {
+const NewExpenseForm: React.FC<{ setIsOpen: (isOpen: boolean) => void }> = ({
+  setIsOpen,
+}) => {
   const { setExpensesData } = useExpensesContext();
 
   const [title, setTitle] = React.useState("");
@@ -81,7 +83,9 @@ const NewExpenseForm: React.FC<{ setIsOpen: any}> = ({ setIsOpen }) => {
         </Control>
       </Controls>
       <Actions>
-        <button type="button" onClick={() => setIsOpen(false)}>Cancel</button>
+        <button type="button" onClick={() => setIsOpen(false)}>
+          Cancel
+        </button>
         <button type="submit">Add Expense</button>
       </Actions>
     </form>

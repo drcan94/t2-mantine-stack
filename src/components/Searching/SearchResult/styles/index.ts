@@ -1,7 +1,10 @@
 import styled from "@emotion/styled";
-import { Text, TextProps } from "@mantine/core";
+import type { MantineTheme, TextProps } from "@mantine/core";
+import { Text } from "@mantine/core";
 
-export const SearchResultContainer = styled(Text)<TextProps>`
+export const SearchResultContainer = styled(Text)<
+  TextProps & { theme: MantineTheme }
+>`
   padding: 10px 20px;
   &:hover {
     background-color: ${({ theme }) =>

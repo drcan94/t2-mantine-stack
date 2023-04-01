@@ -1,11 +1,11 @@
 import React from "react";
 import Chart from "../../Chart";
-import { ChartBarProps } from "../../Chart/ChartBar";
+import { type ChartBarProps } from "../../Chart/ChartBar";
 import { useExpensesContext } from "../../../providers/ExpenseDataProvider/index";
 
 const ExpensesChart: React.FC = () => {
   const { sortedByDateExpenses } = useExpensesContext();
-  
+
   const chartDataPoints: ChartBarProps[] = [
     { label: "Jan", value: 0 },
     { label: "Feb", value: 0 },
@@ -23,7 +23,7 @@ const ExpensesChart: React.FC = () => {
 
   for (const expense of sortedByDateExpenses) {
     const expenseMonth = expense.date.getMonth(); // starting at 0 => January => 0
-    chartDataPoints[expenseMonth].value += expense.price;
+    (chartDataPoints[expenseMonth] as ChartBarProps).value += expense.price;
   }
 
   return <Chart dataPoints={chartDataPoints} />;

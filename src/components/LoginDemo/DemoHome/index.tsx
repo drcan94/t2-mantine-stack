@@ -2,7 +2,7 @@ import React from "react";
 
 import DemoCard from "../DemoCard";
 import styled from "@emotion/styled";
-import DemoButton from '../DemoButton/index';
+import DemoButton from "../DemoButton/index";
 
 const StyledHomeCard = styled(DemoCard)`
   width: 90%;
@@ -12,7 +12,7 @@ const StyledHomeCard = styled(DemoCard)`
   text-align: center;
 `;
 
-const DemoHome: React.FC<any> = ({ onLogout }) => {
+const DemoHome = ({ onLogout }: { onLogout: () => void }) => {
   return (
     <StyledHomeCard>
       <h1>Welcome back!</h1>

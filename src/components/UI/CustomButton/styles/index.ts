@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
+import { type MantineTheme } from "@mantine/core";
 
-export const StyledButton = styled.button`
+export const StyledButton = styled.button<{theme: MantineTheme}>`
   display: flex;
   justify-content: center;
   align-items: center;

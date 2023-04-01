@@ -7,8 +7,9 @@ import { emailReducer } from "./emailReducer";
 import { passwordReducer } from "./passwordReducer";
 import { Actions, FormControl, FormInput, FormLabel } from "./styles";
 import { StyledCard } from "../UI/CustomCard/styles";
+import { type MantineTheme, useMantineTheme } from "@mantine/core";
 
-const StyledLoginCard = styled(StyledCard)`
+const StyledLoginCard = styled(StyledCard)<{ theme: MantineTheme }>`
   width: 90%;
   max-width: 40rem;
   margin: 2rem auto;
@@ -24,6 +25,8 @@ const StyledLoginCard = styled(StyledCard)`
 const LoginDemo: React.FC<{
   onLogin: (email: string, password: string) => void;
 }> = ({ onLogin }) => {
+  const theme = useMantineTheme();
+
   const [email, dispatchEmail] = useReducer(emailReducer, {
     value: "",
     isValid: null,
@@ -94,10 +97,12 @@ const LoginDemo: React.FC<{
   };
 
   return (
-    <StyledLoginCard>
+    <StyledLoginCard theme={theme}>
       <form onSubmit={submitHandler}>
         <FormControl>
-          <FormLabel htmlFor="email">E-Mail</FormLabel>
+          <FormLabel theme={theme} htmlFor="email">
+            E-Mail
+          </FormLabel>
           <FormInput
             isValid={email.isValid}
             type="email"
@@ -108,7 +113,9 @@ const LoginDemo: React.FC<{
           />
         </FormControl>
         <FormControl>
-          <FormLabel htmlFor="password">Password</FormLabel>
+          <FormLabel theme={theme} htmlFor="password">
+            Password
+          </FormLabel>
           <FormInput
             isValid={password.isValid}
             type="password"
@@ -119,10 +126,7 @@ const LoginDemo: React.FC<{
           />
         </FormControl>
         <Actions>
-          <DemoButton
-            type="submit"
-            disabled={!formIsValid}
-          >
+          <DemoButton type="submit" disabled={!formIsValid}>
             Login
           </DemoButton>
         </Actions>

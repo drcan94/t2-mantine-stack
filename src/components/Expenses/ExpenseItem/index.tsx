@@ -1,6 +1,6 @@
 import { Button } from "@mantine/core";
 import React from "react";
-import { IExpense } from "../data";
+import { type IExpense } from "../data";
 import ExpenseDate from "../ExpenseDate";
 import { ExpenseItemContainer, ItemTitle, ItemPrice } from "./styles";
 import { useExpensesContext } from "../../../providers/ExpenseDataProvider";

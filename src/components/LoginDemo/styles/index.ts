@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import type { MantineTheme } from "@mantine/core";
 export const FormControl = styled.div`
   margin: 1rem 0;
   display: flex;
@@ -10,7 +11,7 @@ export const FormControl = styled.div`
   }
 `;
 
-export const FormLabel = styled.label`
+export const FormLabel = styled.label<{ theme: MantineTheme }>`
   display: block;
   font-weight: bold;
   flex: 1;

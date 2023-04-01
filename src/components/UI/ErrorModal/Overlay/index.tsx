@@ -1,6 +1,7 @@
-import { ErrorType } from "../../../Users/AddUser";
+import { type ErrorType } from "../../../Users/AddUser";
 import { StyledErrorCard } from "./styles";
 import CustomButton from "../../CustomButton";
+import { useMantineTheme } from "@mantine/core";
 
 type OverlayProps = {
   title: string;
@@ -13,8 +14,9 @@ export const ModalOverlay: React.FC<OverlayProps> = ({
   errorList,
   onConfirm,
 }) => {
+  const theme = useMantineTheme();
   return (
-    <StyledErrorCard>
+    <StyledErrorCard theme={theme}>
       <header>
         <h2>{title}</h2>
       </header>

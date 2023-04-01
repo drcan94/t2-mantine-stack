@@ -1,6 +1,6 @@
 import React from "react";
 import { ChartContainer } from "./styles/index";
-import ChartBar, { ChartBarProps } from "./ChartBar";
+import ChartBar, { type ChartBarProps } from "./ChartBar";
 
 type ChartProps = {
   dataPoints: ChartBarProps[];
