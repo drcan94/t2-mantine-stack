@@ -2,18 +2,22 @@ import React, { useState } from "react";
 import { InputWrapper } from "./styles";
 import { IconSearch } from "@tabler/icons-react";
 import { useMantineTheme } from "@mantine/core";
+import { type IUser } from "../SearchResult";
 
 interface SearchBarProps {
-  setResults: React.Dispatch<React.SetStateAction<any>>;
+  setResults: React.Dispatch<React.SetStateAction<IUser[]>>;
 }
 
-const fetchData = async (value, setResults) => {
+const fetchData = async (
+  value: string,
+  setResults: React.Dispatch<React.SetStateAction<IUser[]>>
+) => {
   // fetch data from API
   try {
     const response = await fetch("https://jsonplaceholder.typicode.com/users");
-    const json = await response.json();
+    const json = (await response.json()) as IUser[];
 
-    const filteredData = json.filter((user: any) => {
+    const filteredData = json.filter((user: IUser) => {
       return (
         value &&
         user &&
