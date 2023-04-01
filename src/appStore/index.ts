@@ -1,6 +1,6 @@
 // appStore/index.ts
 import { configureStore } from "./helpers/configureStore";
-import { type  GenericAction, combineReducers } from "./helpers/combineReducers";
+import { combineReducers } from "./helpers/combineReducers";
 import { userLoginReducer } from "./modules/user/reducers";
 import type { UserType, UserInfo, UserLoginType, UserAction } from "./modules/user/types";
 
@@ -8,7 +8,7 @@ export type InitialState = {
   userLogin: UserLoginType;
 };
 
-export const rootReducer = combineReducers<InitialState, GenericAction & UserAction>({
+export const rootReducer = combineReducers<InitialState, UserAction>({
   userLogin: userLoginReducer,
 });
 export const initialUser: UserType = {

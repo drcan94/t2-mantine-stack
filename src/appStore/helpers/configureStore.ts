@@ -12,7 +12,7 @@ interface MiddlewareAPI<S, A extends { type: string }> {
   dispatch: Dispatch<A>;
 }
 
-type Dispatch<A extends { type: string }> = (action: A) => any;
+type Dispatch<A extends { type: string }> = (action: A) => A;
 
 export const configureStore = <S, A extends { type: string }>({
   reducer,
@@ -22,14 +22,14 @@ export const configureStore = <S, A extends { type: string }>({
   const store = {
     _state: preloadedState || reducer(undefined, { type: "" } as A),
     getState: () => store._state,
-    dispatch: (action: A) => {
+    dispatch: (action: A): A => {
       if (typeof action === "function") {
-        return action(store.dispatch, store.getState);
+        return (action as (dispatch: Dispatch<A>, getState: () => S) => A)(store.dispatch, store.getState); // Cast 'action' to the correct function type
       }
 
       const middlewareAPI: MiddlewareAPI<S, A> = {
         getState: store.getState,
-        dispatch: (action: A) => store.dispatch(action),
+        dispatch: (action: A): A => store.dispatch(action),
       };
 
       const chain = [...middlewares, asyncMiddleware].map((middleware) =>
