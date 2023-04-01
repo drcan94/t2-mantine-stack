@@ -3,7 +3,7 @@ import { Group, ActionIcon, Box } from "@mantine/core";
 import { IconSun, IconMoonStars } from "@tabler/icons-react";
 import { Logo } from "./Logo";
 import Link from "next/link";
-import { useUIContext } from "../../providers/UIContextProvider/index";
+import { useUIContext } from "../UIContextProvider/index";
 
 export const Brand: React.FC<{
   sm: boolean;

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useClickOutside, useMediaQuery } from "@mantine/hooks";
-import { MainLinks } from "../LayoutProvider/MainLinks";
-import { Brand } from "../LayoutProvider/Brand";
-import { User } from "../LayoutProvider/User";
+import { MainLinks } from "../MainLinks";
+import { Brand } from "../Brand";
+import { User } from "../User";
 import { Box, type MantineColor } from "@mantine/core";
-import { useUIContext } from "../../providers/UIContextProvider";
+import { useUIContext } from "../../UIContextProvider";
 import {
   AppShell,
   Navbar,
@@ -16,7 +16,7 @@ import {
 } from "@mantine/core";
 import type { NextPage } from "next";
 
-const MainApp: NextPage<{ children: React.ReactNode }> = ({ children }) => {
+const Shell: NextPage<{ children: React.ReactNode }> = ({ children }) => {
   const theme = useMantineTheme();
   const { rtl } = useUIContext();
 
@@ -174,4 +174,4 @@ const MainApp: NextPage<{ children: React.ReactNode }> = ({ children }) => {
   );
 };
 
-export default MainApp;
+export default Shell;

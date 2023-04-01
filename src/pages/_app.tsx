@@ -3,36 +3,43 @@ import Cookies from "universal-cookie"; // for parsing and serializing cookies
 import { api } from "~/utils/api";
 import type { Session } from "next-auth";
 import type { ColorScheme } from "@mantine/core";
-import LayoutProvider from "~/components/LayoutProvider";
+import LayoutProvider from "~/providers/LayoutProvider";
 import { SessionProvider, getSession } from "next-auth/react";
 import type { AppContext, AppType } from "next/app";
 import UIContextProvider from "../providers/UIContextProvider/index";
+import { AppProvider } from "~/appStore/AppProvider";
+import { Provider } from "react-redux";
+import { store } from "../redux/store";
 
-type MyAppProps = {
+type MainAppProps = {
   session: Session | null;
   initialRtl: boolean;
   initialColorScheme: ColorScheme;
 };
 
-const MyApp: AppType<MyAppProps> = ({
+const MainApp: AppType<MainAppProps> = ({
   Component,
   pageProps: { session, initialRtl, initialColorScheme, ...pageProps },
 }) => {
   return (
-    <SessionProvider session={session}>
-      <UIContextProvider
-        initialRtl={initialRtl}
-        initialColorScheme={initialColorScheme}
-      >
-        <LayoutProvider>
-          <Component {...pageProps} />
-        </LayoutProvider>
-      </UIContextProvider>
-    </SessionProvider>
+    <Provider store={store}>
+      <AppProvider>
+        <SessionProvider session={session}>
+          <UIContextProvider
+            initialRtl={initialRtl}
+            initialColorScheme={initialColorScheme}
+          >
+            <LayoutProvider>
+              <Component {...pageProps} />
+            </LayoutProvider>
+          </UIContextProvider>
+        </SessionProvider>
+      </AppProvider>
+    </Provider>
   );
 };
 
-MyApp.getInitialProps = async ({ ctx, ...props }: AppContext) => {
+App.getInitialProps = async ({ ctx, ...props }: AppContext) => {
   const req = ctx.req;
   const cookies = new Cookies(req?.headers.cookie);
 
@@ -56,7 +63,7 @@ MyApp.getInitialProps = async ({ ctx, ...props }: AppContext) => {
   };
 };
 
-export default api.withTRPC(MyApp);
+export default api.withTRPC(MainApp);
 
 // cookie package usage
 // const cookieStr: string = (ctx.req?.headers.cookie as string) || "";

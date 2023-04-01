@@ -85,7 +85,7 @@ const data = [
     icon: <IconLetterC size={16} />,
     color: "violet",
     label: "Course Goals",
-    path: "/goals",
+    path: "/course/goals",
   },
   {
     icon: <IconUsers size={16} />,

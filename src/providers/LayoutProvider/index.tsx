@@ -2,10 +2,10 @@ import React, { type CSSProperties } from "react";
 import { MantineProvider, ColorSchemeProvider } from "@mantine/core";
 import type { MantineTheme, CSSObject } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
-import { useUIContext } from "../../providers/UIContextProvider";
+import { useUIContext } from "../UIContextProvider";
 import { rtlCache } from "./rtl-cache";
 import type { NextPage } from "next";
-import MainApp from "../MainApp";
+import Shell from "./Shell";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -115,7 +115,7 @@ const LayoutProvider: NextPage<LayoutProps> = ({
           },
         }}
       >
-        <MainApp>{children}</MainApp>
+        <Shell>{children}</Shell>
       </MantineProvider>
     </ColorSchemeProvider>
   );

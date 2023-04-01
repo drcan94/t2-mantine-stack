@@ -39,7 +39,7 @@ const UIContextProvider: NextPage<ProviderProps> = ({
   };
 
   useEffect(() => {
-    cookies.set("currentRtl", rtl.toString());
+    cookies.set("currentRtl", rtl?.toString());
   }, [rtl]);
 
   useEffect(() => {
