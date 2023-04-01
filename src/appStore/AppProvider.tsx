@@ -11,10 +11,15 @@ import type { NextPage } from "next";
 export const AppProvider: NextPage<AppProviderProps> = ({ children }) => {
   const state = store.getState();
 
-  const dispatch = async (action: ReturnType<AppDispatch> | AsyncAction) => {
-    typeof action === "function"
-      ? await action(store.dispatch, store.getState)
-      : store.dispatch(action);
+  const dispatch = async (
+    action: ReturnType<AppDispatch> | AsyncAction
+  ): Promise<void> => {
+    if (typeof action === "function") {
+      await action(store.dispatch);
+    } else {
+      store.dispatch(action);
+    }
+    return Promise.resolve();
   };
 
   return (
