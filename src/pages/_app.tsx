@@ -45,15 +45,12 @@ App.getInitialProps = async ({ ctx, ...props }: AppContext) => {
     (cookies.get("color-scheme") as ColorScheme) || "light";
 
   const appContext = await App.getInitialProps({ ctx, ...props });
-  const session = await getSession(ctx);
 
   return {
     ...appContext,
-    session,
     initialColorScheme,
     initialRtl,
     pageProps: {
-      session,
       initialColorScheme,
       initialRtl,
     },
