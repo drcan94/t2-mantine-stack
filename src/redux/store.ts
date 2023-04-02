@@ -8,27 +8,23 @@ import logger from "redux-logger";
 import { batchedSubscribe } from "redux-batched-subscribe";
 import _ from "lodash";
 
-import { userLoginReducer } from "./reducers/userReducers";
+const reducer = combineReducers({});
 
-const reducer = combineReducers({
-  userLogin: userLoginReducer,
-});
-
-let userInfoFromLs: string | null = null;
-if (typeof window !== "undefined") {
-  userInfoFromLs = localStorage.getItem("currentUser") as string;
-  if (!userInfoFromLs) {
-    localStorage.setItem("currentUser", JSON.stringify([]));
-  }
-}
+// let userInfoFromLs: string | null = null;
+// if (typeof window !== "undefined") {
+//   userInfoFromLs = localStorage.getItem("currentUser") as string;
+//   if (!userInfoFromLs) {
+//     localStorage.setItem("currentUser", JSON.stringify([]));
+//   }
+// }
 
 const preloadedState = {
-  userLogin: {
-    userInfo: userInfoFromLs,
-  },
+  // userLogin: {
+  //   userInfo: userInfoFromLs,
+  // },
 };
 
-const debounceNotify = _.debounce((notify) => notify());
+const debounceNotify = _.debounce((notify: any) => notify());
 
 export const store = configureStore({
   reducer,

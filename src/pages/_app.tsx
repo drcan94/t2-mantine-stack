@@ -7,7 +7,6 @@ import LayoutProvider from "~/providers/LayoutProvider";
 import { SessionProvider, getSession } from "next-auth/react";
 import type { AppContext, AppType } from "next/app";
 import UIContextProvider from "../providers/UIContextProvider/index";
-import { AppProvider } from "~/appStore/AppProvider";
 import { Provider } from "react-redux";
 import { store } from "../redux/store";
 
@@ -23,18 +22,16 @@ const MainApp: AppType<MainAppProps> = ({
 }) => {
   return (
     <Provider store={store}>
-      <AppProvider>
-        <SessionProvider session={session}>
-          <UIContextProvider
-            initialRtl={initialRtl}
-            initialColorScheme={initialColorScheme}
-          >
-            <LayoutProvider>
-              <Component {...pageProps} />
-            </LayoutProvider>
-          </UIContextProvider>
-        </SessionProvider>
-      </AppProvider>
+      <SessionProvider session={session}>
+        <UIContextProvider
+          initialRtl={initialRtl}
+          initialColorScheme={initialColorScheme}
+        >
+          <LayoutProvider>
+            <Component {...pageProps} />
+          </LayoutProvider>
+        </UIContextProvider>
+      </SessionProvider>
     </Provider>
   );
 };
