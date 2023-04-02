@@ -1,8 +1,6 @@
 import React, { useEffect, useReducer, useState } from "react";
 import DemoButton from "./DemoButton";
 import styled from "@emotion/styled";
-import { loginUser } from "../../appStore/modules/user/actions";
-import { useAppDispatch } from "../../appStore/hooks";
 import { emailReducer } from "./emailReducer";
 import { passwordReducer } from "./passwordReducer";
 import { Actions, FormControl, FormInput, FormLabel } from "./styles";
@@ -38,8 +36,6 @@ const LoginDemo: React.FC<{
   });
 
   const [formIsValid, setFormIsValid] = useState(false);
-
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const identifier = setTimeout(() => {
@@ -87,7 +83,6 @@ const LoginDemo: React.FC<{
       const formData = new FormData();
       formData.append("email", email.value);
       formData.append("password", password.value);
-      dispatch(loginUser(formData));
 
       // this is the old way of doing it by maximilian
       onLogin(email.value, password.value);
