@@ -6,7 +6,7 @@ import CourseGoalItem, {
 
 const CourseGoalList: React.FC<{
   id: string;
-  onDeleteItem: () => void;
+  onDeleteItem: (goalId: string) => void;
   children: React.ReactNode;
   items: GoalItemType[];
 }> = ({ id, onDeleteItem, items }) => {
