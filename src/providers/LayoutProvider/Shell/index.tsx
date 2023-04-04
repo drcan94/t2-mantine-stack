@@ -90,6 +90,7 @@ const Shell: NextPage<{ children: React.ReactNode }> = ({ children }) => {
         main: {
           background: bgColor,
           paddingLeft: opened && !sm ? "300px !important" : "0 !important",
+          paddingRight: 0,
           filter: opened && sm ? "blur(10px)" : "blur(0)",
           transition: "padding-left .3s linear",
         },
