@@ -1,70 +1,53 @@
-import App from "next/app";
-import Cookies from "universal-cookie"; // for parsing and serializing cookies
-import { api } from "~/utils/api";
-import type { Session } from "next-auth";
-import type { ColorScheme } from "@mantine/core";
-import LayoutProvider from "~/providers/LayoutProvider";
-import { SessionProvider, getSession } from "next-auth/react";
-import type { AppContext, AppType } from "next/app";
-import UIContextProvider from "../providers/UIContextProvider/index";
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { type AppType } from "next/app";
+import { type Session } from "next-auth";
+import { wrapper } from "../redux/store";
 import { Provider } from "react-redux";
-import { store } from "../redux/store";
+import { SessionProvider } from "next-auth/react";
+import { api } from "~/utils/api";
+import { PersistGate } from "redux-persist/integration/react";
+import LayoutProvider from "../providers/LayoutProvider/index";
+import type { AppStore } from "~/redux/hooks";
+import type { ColorScheme } from "@mantine/core";
+import type { GetServerSideProps, GetServerSidePropsContext } from "next";
+import Cookies from "universal-cookie";
 
-type MainAppProps = {
-  session: Session | null;
-  initialRtl: boolean;
-  initialColorScheme: ColorScheme;
-};
-
-const MainApp: AppType<MainAppProps> = ({
-  Component,
-  pageProps: { session, initialRtl, initialColorScheme, ...pageProps },
-}) => {
-  return (
-    <Provider store={store}>
-      <SessionProvider session={session}>
-        <UIContextProvider
-          initialRtl={initialRtl}
-          initialColorScheme={initialColorScheme}
-        >
-          <LayoutProvider>
-            <Component {...pageProps} />
-          </LayoutProvider>
-        </UIContextProvider>
-      </SessionProvider>
-    </Provider>
-  );
-};
-
-App.getInitialProps = async ({ ctx, ...props }: AppContext) => {
-  const req = ctx.req;
-  const cookies = new Cookies(req?.headers.cookie);
-
-  const initialRtl = cookies.get("currentRtl") === "true";
-  const initialColorScheme =
-    (cookies.get("color-scheme") as ColorScheme) || "light";
-
-  const appContext = await App.getInitialProps({ ctx, ...props });
-
-  return {
-    ...appContext,
-    initialColorScheme,
-    initialRtl,
+type WrappedStore = {
+  store: AppStore;
+  props: {
     pageProps: {
-      initialColorScheme,
-      initialRtl,
-    },
+      session: Session | null;
+      initialColorScheme: ColorScheme;
+      initialRtl: boolean;
+      [key: string]: unknown;
+    };
+    [key: string]: unknown;
   };
 };
 
-export default api.withTRPC(MainApp);
+const MyApp: AppType<{
+  session: Session | null;
+  initialColorScheme: ColorScheme;
+  initialRtl: boolean;
+}> = ({ Component, ...rest }) => {
+  const wrStore: WrappedStore = wrapper.useWrappedStore(rest);
+  const store = wrStore.store;
+  const props = wrStore.props;
+  const pageProps = props.pageProps;
+  const { session, initialColorScheme, initialRtl, ...restPageProps } =
+    pageProps;
 
-// cookie package usage
-// const cookieStr: string = (ctx.req?.headers.cookie as string) || "";
-// const cookies = cookie.parse(cookieStr) as Record<string, string>;
-// const initialRtl = cookies["currentRtl"] === "true";
-// const initialColorScheme =
-//   (cookies["color-scheme"] as ColorScheme) || "light";
+  return (
+    <SessionProvider session={session}>
+      <Provider store={store}>
+        <PersistGate persistor={store.__persistor} loading={null}>
+          <LayoutProvider>
+            <Component {...restPageProps} />
+          </LayoutProvider>
+        </PersistGate>
+      </Provider>
+    </SessionProvider>
+  );
+};
 
-// const appContext = await App.getInitialProps({ ctx, ...props });
-// const session = await getSession(ctx);
+export default api.withTRPC(MyApp);

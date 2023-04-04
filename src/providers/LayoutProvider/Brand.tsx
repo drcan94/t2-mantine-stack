@@ -3,13 +3,18 @@ import { Group, ActionIcon, Box } from "@mantine/core";
 import { IconSun, IconMoonStars } from "@tabler/icons-react";
 import { Logo } from "./Logo";
 import Link from "next/link";
-import { useUIContext } from "../UIContextProvider/index";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectColorScheme,
+  toggleColorScheme,
+} from "~/redux/modules/ui/uiSlice";
 
 export const Brand: React.FC<{
   sm: boolean;
   setOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ sm, setOpened }) => {
-  const { colorScheme, toggleColorScheme } = useUIContext();
+  const dispatch = useDispatch();
+  const colorScheme = useSelector(selectColorScheme);
 
   return (
     <Box
@@ -36,7 +41,7 @@ export const Brand: React.FC<{
         </Box>
         <ActionIcon
           variant="default"
-          onClick={() => toggleColorScheme()}
+          onClick={() => dispatch(toggleColorScheme())}
           size={30}
         >
           {colorScheme === "dark" ? (

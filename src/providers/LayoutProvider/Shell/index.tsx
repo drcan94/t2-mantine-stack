@@ -4,7 +4,6 @@ import { MainLinks } from "../MainLinks";
 import { Brand } from "../Brand";
 import { User } from "../User";
 import { Box, type MantineColor } from "@mantine/core";
-import { useUIContext } from "../../UIContextProvider";
 import {
   AppShell,
   Navbar,
@@ -15,10 +14,12 @@ import {
   ScrollArea,
 } from "@mantine/core";
 import type { NextPage } from "next";
+import { useSelector } from "react-redux";
+import { selectRtl } from "~/redux/modules/ui/uiSlice";
 
 const Shell: NextPage<{ children: React.ReactNode }> = ({ children }) => {
   const theme = useMantineTheme();
-  const { rtl } = useUIContext();
+  const rtl = useSelector(selectRtl);
 
   const xs = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`, undefined, {
     getInitialValueInEffect: false,

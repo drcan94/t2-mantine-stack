@@ -1,44 +1,51 @@
+import type { AppStore } from "./hooks";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import { createWrapper } from "next-redux-wrapper";
 import {
-  configureStore,
-  type ThunkAction,
-  type Action,
-} from "@reduxjs/toolkit";
-import { combineReducers } from "@reduxjs/toolkit";
-import logger from "redux-logger";
-import { batchedSubscribe } from "redux-batched-subscribe";
-import _ from "lodash";
-
-const reducer = combineReducers({});
-
-// let userInfoFromLs: string | null = null;
-// if (typeof window !== "undefined") {
-//   userInfoFromLs = localStorage.getItem("currentUser") as string;
-//   if (!userInfoFromLs) {
-//     localStorage.setItem("currentUser", JSON.stringify([]));
-//   }
-// }
-
-const preloadedState = {
-  // userLogin: {
-  //   userInfo: userInfoFromLs,
-  // },
-};
-
-const debounceNotify = _.debounce((notify: any) => notify());
-
-export const store = configureStore({
-  reducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
-  devTools: process.env.NODE_ENV !== "production",
-  preloadedState,
-  enhancers: [batchedSubscribe(debounceNotify)],
+  persistReducer,
+  persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import { uiSlice } from "./modules/ui/uiSlice";
+const rootReducer = combineReducers({
+  [uiSlice.name]: uiSlice.reducer,
 });
 
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->;
+export const makeStore = () => {
+  const isServer = typeof window === "undefined";
+  if (isServer) {
+    return configureStore({
+      reducer: rootReducer,
+      devTools: true,
+    });
+  } else {
+    // we need it only on client side
+    const persistConfig = {
+      key: "nextjs",
+      whitelist: ["ui"], // make sure it does not clash with server keys
+      storage,
+    };
+    const persistedReducer = persistReducer(persistConfig, rootReducer);
+    const store = configureStore({
+      reducer: persistedReducer,
+      devTools: process.env.NODE_ENV !== "production",
+      middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+          serializableCheck: {
+            ignoredActions: [REHYDRATE, FLUSH, PAUSE, PERSIST, PURGE, REGISTER],
+          },
+        }),
+    });
+    store.__persistor = persistStore(store); // Nasty hack
+    return store;
+  }
+};
+
+
+export const wrapper = createWrapper<AppStore>(makeStore);

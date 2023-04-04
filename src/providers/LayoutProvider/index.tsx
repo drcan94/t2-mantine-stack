@@ -1,28 +1,44 @@
-import React, { type CSSProperties } from "react";
+import React, { useState, type CSSProperties, useEffect } from "react";
 import { MantineProvider, ColorSchemeProvider } from "@mantine/core";
 import type { MantineTheme, CSSObject } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
-import { useUIContext } from "../UIContextProvider";
 import { rtlCache } from "./rtl-cache";
 import type { NextPage } from "next";
 import Shell from "./Shell";
+import {
+  selectColorScheme,
+  selectRtl,
+  toggleColorScheme,
+  toggleRtl,
+} from "~/redux/modules/ui/uiSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 type LayoutProps = {
   children: React.ReactNode;
 };
 
-const LayoutProvider: NextPage<LayoutProps> = ({
-  children,
-}) => {
-  const { rtl, setRtl, colorScheme, toggleColorScheme } = useUIContext();
+const LayoutProvider: NextPage<LayoutProps> = ({ children }) => {
+  const colorScheme = useSelector(selectColorScheme);
+  const rtl = useSelector(selectRtl);
+  const [loaded, setLoaded] = useState<boolean>(false);
 
-  useHotkeys([["mod+J", () => toggleColorScheme()]]);
-  useHotkeys([["mod+shift+L", () => setRtl((c) => !c)]]);
+  const dispatch = useDispatch();
+
+  useHotkeys([["mod+J", () => dispatch(toggleColorScheme())]]);
+  useHotkeys([["mod+shift+L", () => dispatch(toggleRtl())]]);
+
+  useEffect(() => {
+    if (!loaded) {
+      setLoaded(true);
+    }
+  }, [loaded]);
+
+  if (!loaded) return null;
 
   return (
     <ColorSchemeProvider
       colorScheme={colorScheme}
-      toggleColorScheme={toggleColorScheme}
+      toggleColorScheme={() => dispatch(toggleColorScheme())}
     >
       <MantineProvider
         withGlobalStyles
@@ -120,7 +136,5 @@ const LayoutProvider: NextPage<LayoutProps> = ({
     </ColorSchemeProvider>
   );
 };
-
-
 
 export default LayoutProvider;
