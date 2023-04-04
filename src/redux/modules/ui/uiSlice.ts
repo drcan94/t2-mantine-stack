@@ -1,5 +1,5 @@
 import type { ColorScheme } from "@mantine/core";
-import { createSlice } from "@reduxjs/toolkit";
+import { Action, PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 import { FLUSH } from "redux-persist";
 import Cookies from "universal-cookie";
@@ -43,14 +43,12 @@ export const uiSlice = createSlice({
   // Special reducer for hydrating the state. Special case for next-redux-wrapper
   extraReducers: (builder) => {
     builder.addCase(HYDRATE, (state, action) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return {
         ...state,
-        ...action.payload.ui,
-      };
-    });
-    builder.addCase(FLUSH, (state, action) => {
-      return {
-        ...state,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        // eslint-disable-next-line
         ...action.payload.ui,
       };
     });
