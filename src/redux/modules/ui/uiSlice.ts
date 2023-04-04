@@ -1,7 +1,6 @@
 import type { ColorScheme } from "@mantine/core";
-import { Action, PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
-import { FLUSH } from "redux-persist";
 import Cookies from "universal-cookie";
 import type { AppState } from "~/redux/hooks";
 

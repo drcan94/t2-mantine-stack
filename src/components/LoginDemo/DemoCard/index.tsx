@@ -6,7 +6,10 @@ const StyledCard = styled.div`
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 10px;
 `;
-const DemoCard: React.FC<any> = ({ children, ...props }) => {
+const DemoCard: React.FC<{ children: React.ReactNode }> = ({
+  children,
+  ...props
+}) => {
   return <StyledCard {...props}>{children}</StyledCard>;
 };
 

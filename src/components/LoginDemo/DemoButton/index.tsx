@@ -3,7 +3,7 @@ import { StyledDemoButton } from "./styles";
 
 interface IDemoButton {
   type?: "button" | "submit";
-  onClick?: any;
+  onClick?: () => void;
   disabled?: boolean;
   children: React.ReactNode;
 }

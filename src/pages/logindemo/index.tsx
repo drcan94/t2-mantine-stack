@@ -16,7 +16,7 @@ function LoginDemoScreen() {
   const loginHandler = (email: string, password: string) => {
     // We should of course check email and password
     // But it's just a dummy/ demo anyways
-    // console.log(email, password);
+    console.log(email, password);
     localStorage.setItem("isLoggedInDemo", "1");
     setIsLoggedIn(true);
   };
