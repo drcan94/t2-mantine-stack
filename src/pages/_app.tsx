@@ -38,7 +38,6 @@ const MyApp: AppType<{
           <LayoutProvider>
             <Component {...restPageProps} />
           </LayoutProvider>
-          x
         </PersistGate>
       </Provider>
     </SessionProvider>
