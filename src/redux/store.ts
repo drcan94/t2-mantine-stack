@@ -42,10 +42,11 @@ export const makeStore = () => {
           },
         }),
     });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     store.__persistor = persistStore(store); // Nasty hack
     return store;
   }
 };
-
 
 export const wrapper = createWrapper<AppStore>(makeStore);
