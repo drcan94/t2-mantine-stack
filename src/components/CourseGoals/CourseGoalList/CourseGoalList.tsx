@@ -5,15 +5,13 @@ import CourseGoalItem, {
 } from "../CourseGoalItem/CourseGoalItem";
 
 const CourseGoalList: React.FC<{
-  id: string;
   onDeleteItem: (goalId: string) => void;
-  children: React.ReactNode;
   items: GoalItemType[];
-}> = ({ id, onDeleteItem, items }) => {
+}> = ({ onDeleteItem, items }) => {
   return (
     <ul>
       {items.map((goal) => (
-        <CourseGoalItem key={id} id={id} onDelete={onDeleteItem}>
+        <CourseGoalItem key={goal.id} id={goal.id} onDelete={onDeleteItem}>
           {goal.text}
         </CourseGoalItem>
       ))}

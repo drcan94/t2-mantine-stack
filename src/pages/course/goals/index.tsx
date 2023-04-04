@@ -5,11 +5,12 @@ import CourseInput from "../../../components/CourseGoals/CourseInput/CourseInput
 import { useMantineTheme } from "@mantine/core";
 import { GoalForm } from "~/components/CourseGoals/CourseInput/styles";
 import { Goals } from "~/components/CourseGoals/CourseGoalList/styles";
+import type { GoalItemType } from "../../../components/CourseGoals/CourseGoalItem/CourseGoalItem";
 
 const CourseGoalScreen: React.FC = () => {
   const theme = useMantineTheme();
 
-  const [courseGoals, setCourseGoals] = React.useState([
+  const [courseGoals, setCourseGoals] = React.useState<GoalItemType[]>([
     { text: "Do all exercises!", id: "g1" },
     { text: "Finish the course!", id: "g2" },
   ]);
