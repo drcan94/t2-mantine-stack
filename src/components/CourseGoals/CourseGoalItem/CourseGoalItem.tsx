@@ -2,17 +2,26 @@ import React from "react";
 import { GoalItem } from "./styles";
 import { useMantineTheme } from "@mantine/core";
 
-const CourseGoalItem: React.FC<any> = (props) => {
+export type GoalItemType = {
+  text: string;
+  id: string;
+};
+
+const CourseGoalItem: React.FC<{
+  children: React.ReactNode;
+  onDelete: (id: string) => void;
+  id: string;
+}> = ({ children, onDelete, id }) => {
   const theme = useMantineTheme();
   // const [deleteText, setDeleteText] = useState('');
   const deleteHandler = () => {
     // setDeleteText('(Deleted!)');
-    props.onDelete(props.id);
+    onDelete(id);
   };
 
   return (
     <GoalItem theme={theme} onClick={deleteHandler}>
-      {props.children}
+      {children}
     </GoalItem>
   );
 };

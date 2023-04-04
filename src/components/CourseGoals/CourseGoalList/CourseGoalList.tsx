@@ -1,16 +1,19 @@
 import React from "react";
 
-import CourseGoalItem from "../CourseGoalItem/CourseGoalItem";
+import CourseGoalItem, {
+  type GoalItemType,
+} from "../CourseGoalItem/CourseGoalItem";
 
-const CourseGoalList: React.FC<any> = (props) => {
+const CourseGoalList: React.FC<{
+  id: string;
+  onDeleteItem: () => void;
+  children: React.ReactNode;
+  items: GoalItemType[];
+}> = ({ id, onDeleteItem, items }) => {
   return (
     <ul>
-      {props.items.map((goal: any) => (
-        <CourseGoalItem
-          key={goal.id}
-          id={goal.id}
-          onDelete={props.onDeleteItem}
-        >
+      {items.map((goal) => (
+        <CourseGoalItem key={id} id={id} onDelete={onDeleteItem}>
           {goal.text}
         </CourseGoalItem>
       ))}

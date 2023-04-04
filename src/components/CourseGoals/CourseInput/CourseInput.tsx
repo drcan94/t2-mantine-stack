@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@mantine/core";
 import { FormControl } from "./styles/index";
 
-const CourseInput: React.FC<any> = ({ onAddGoal }) => {
+const CourseInput: React.FC<{
+  onAddGoal: (goal: string) => void;
+}> = ({ onAddGoal }) => {
   const [enteredValue, setEnteredValue] = useState("");
 
   const [isValid, setIsValid] = useState(true);
 
-  const goalInputChangeHandler = (event: any) => {
+  const goalInputChangeHandler = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setEnteredValue(event.target.value);
   };
 
@@ -17,7 +21,7 @@ const CourseInput: React.FC<any> = ({ onAddGoal }) => {
     }
   }, [enteredValue]);
 
-  const formSubmitHandler = (event: any) => {
+  const formSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (enteredValue.trim().length === 0) {
       setIsValid(false);
