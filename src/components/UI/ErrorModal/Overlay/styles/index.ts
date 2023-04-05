@@ -2,11 +2,11 @@ import styled from "@emotion/styled";
 import { StyledCard } from "../../../CustomCard/styles";
 
 export const StyledErrorCard = styled(StyledCard)`
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80%;
+  max-width: 95%;
   z-index: 103;
   max-height: fit-content;
   overflow: hidden;
@@ -34,8 +34,4 @@ export const StyledErrorCard = styled(StyledCard)`
     justify-content: flex-end;
   }
 
-  @media (min-width: 768px) {
-    left: calc(50% - 20rem);
-    width: 40rem;
-  }
 `;
