@@ -1,12 +1,8 @@
-import React from "react";
 import Users from "../../components/Users";
+import { NextPage } from "next";
 
-const UsersScreen: React.FC = () => {
-  return (
-    <div>
-      <Users />
-    </div>
-  );
+const UsersScreen: NextPage = () => {
+  return <Users />;
 };
 
 export default UsersScreen;
