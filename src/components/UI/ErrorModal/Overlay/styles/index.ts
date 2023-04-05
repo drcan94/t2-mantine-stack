@@ -3,9 +3,9 @@ import { StyledCard } from "../../../CustomCard/styles";
 
 export const StyledErrorCard = styled(StyledCard)`
   position: absolute;
-  top: 14%;
+  top: 50%;
   left: 50%;
-  transform: translate(-50%, -14%);
+  transform: translate(-50%, -50%);
   width: 80%;
   z-index: 103;
   max-height: fit-content;
